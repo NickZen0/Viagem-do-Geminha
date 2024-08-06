@@ -12,3 +12,24 @@ const Destinos = () => {
     { nome: 'Pequim', descricao: 'A capital da China.', distancia: 17856 }
   ]);
 }
+ const calcularCustos = (distancia, dataIda, dataVolta, tipoEstalagem, participantes) => {
+     const hoje = new Date();
+     const ida = new Date(dataIda);
+     const volta = new Date(dataVolta);
+     const diasEstadia = (volta - ida) / (1000 * 60 * 60 * 24);
+     const semanasEstadia = Math.ceil(diasEstadia / 7);
+     
+     let custoVoo = distancia > 2000 ? 2 * 1500 : 1500;
+     if ((ida - hoje) < (2 * 30 * 24 * 60 * 60 * 1000)) {
+       custoVoo = 1500;
+     }
+     if (distancia > 2000) {
+       custoVoo += (distancia - 2000);
+     }
+     
+     const custoEstalagem = tipoEstalagem === 'luxo' ? 700 : 400;
+     const custoTotalEstalagem = semanasEstadia * custoEstalagem * (1 + (participantes - 1) * 0.25);
+     
+     return custoVoo + custoTotalEstalagem;
+   };
+  
